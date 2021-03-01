@@ -1,0 +1,113 @@
+/*global variables*/
+#root {
+  height: 100%;
+}
+html {
+  box-sizing: border-box;
+}
+body {
+  height: 100vh;
+  margin: 0;
+}
+ul, li {
+  list-style: none;
+}
+i{
+  cursor: pointer;
+}
+
+
+.grid-container{
+  display: grid;
+  grid-template-areas:
+	"main-content"
+    "footer";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 75px;
+  height: 100%;
+}
+.main-content{
+  grid-area: main-content;
+}
+
+
+/*navbar and footer*/
+.Navbar{
+  height: 100px;
+  background-color: #203040;
+  color: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  font-size: 18px;
+}
+
+.Footer{
+  grid-area: footer;
+  background-color: #203040;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*auth forms*/
+.submitForm{
+  border: #e3e3e3 solid 3px;
+  width: 75%;
+  margin: 40px auto;
+  font-size: 20px;
+}
+.ui .message{
+  margin: 0;
+  padding: 10px 0;
+  display: flex;
+  text-align: center;
+}
+.ui .message .content{
+  height: 100%;
+  margin: auto !important;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+.success-text p{
+  color: rgb(0, 159, 218);
+}
+.error-text p{
+  color: red;
+}
+.ui .field input{
+  height: 50px;
+  font-size: 25px;
+}
+.ui .button{
+  font-size: 15px;
+}
+
+
+/*admin panel modal*/
+.ui .modal{
+  text-align: center;
+}
+.ui .modal button{
+  font-size: 20px;
+}
+
+
+/*not found page*/
+.main, .notFound{
+  text-align: center;
+  margin: 10px 0;
+  font-size: 20px;
+}
+
+
+@media screen and (max-width: 600px) {
+  .submitForm{
+	width: 75%;
+  }
+}
+
