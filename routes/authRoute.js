@@ -105,7 +105,6 @@ router.get('/', isAuth, isAdmin, async (req,res) => {
   }
 });
 
-
 //delete a user
 router.delete('/:id', isAuth, isAdmin, async (req, res) => {
   try{
@@ -119,6 +118,5 @@ router.delete('/:id', isAuth, isAdmin, async (req, res) => {
 	return res.status(400).json({ message: "Error in deleting user" });
   }
 });
-
 
 module.exports = router;
