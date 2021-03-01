@@ -26,4 +26,5 @@ const isAdmin = (req, res, next) => {
   return res.status(401).send({ message: "You must be an admin to do that." });
 };
 
+
 module.exports = { isAuth, isAdmin };
