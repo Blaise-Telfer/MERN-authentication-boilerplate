@@ -103,5 +103,4 @@ const mapStateToProps = (state) => ({
   authInfo: state.authInfo
 });
 
-
 export default connect(mapStateToProps, { loginUser })(Login);
