@@ -43,7 +43,6 @@ export const loginUser = (userData, history) => async (dispatch) => {
     localStorage.setItem("jwtToken", token);
     setAuthToken(token);
 	history.push(`/dashboard`);
-	window.location.reload();
   }
   catch(error){
     dispatch({ type: LOGIN_FAIL, payload: error.response.data });
