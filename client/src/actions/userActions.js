@@ -37,12 +37,12 @@ export const loginUser = (userData, history) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     const { data } = await axios.post(`/api/auth/login`, userData);
     const token = data.token;
-	const decoded = jwt_decode(token);
+    const decoded = jwt_decode(token);
     dispatch({ type: SET_CURRENT_USER, payload: decoded });
     cookie.set("userCookie", token);
     localStorage.setItem("jwtToken", token);
     setAuthToken(token);
-	history.push(`/dashboard`);
+    history.push(`/dashboard`);
   }
   catch(error){
     dispatch({ type: LOGIN_FAIL, payload: error.response.data });
@@ -70,10 +70,10 @@ export const setCurrentUser = (decoded) => {
 export const fetchUsers = () => async (dispatch, getState) => {
   try {
     const { authInfo: { authToken } } = getState();
-	dispatch({ type: FETCH_REQUEST });
+    dispatch({ type: FETCH_REQUEST });
     const {data} = await axios.get(`/api/auth`,
-	  {headers: {Authorization: authToken} }
-	);
+	{headers: {Authorization: authToken} }
+    );
     dispatch({ type: FETCH_SUCCESS, payload: data })
   } catch (error) {
     dispatch({ type: FETCH_FAIL, payload: error.message });
@@ -85,13 +85,13 @@ export const fetchUsers = () => async (dispatch, getState) => {
 export const deleteUser = (userId) => async (dispatch, getState) => {
   try {
     const { authInfo: { authToken } } = getState();
-	dispatch({ type: USER_DELETE_REQUEST, payload: userId });
+    dispatch({ type: USER_DELETE_REQUEST, payload: userId });
     const { data } = await axios.delete(`/api/auth/${userId}`, 
-	  {headers: {Authorization: authToken} }
-	);
+	{headers: {Authorization: authToken} }
+    );
     dispatch({ type: USER_DELETE_SUCCESS, payload: data, success: true });
-	window.location.reload()
+    window.location.reload()
   } catch (error) {
-	dispatch({ type: USER_DELETE_FAIL, payload: error.response.data });
+    dispatch({ type: USER_DELETE_FAIL, payload: error.response.data });
   }
 };
