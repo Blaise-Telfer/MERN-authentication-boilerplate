@@ -10,7 +10,7 @@ const validateRegisterInput = require("../middleware/validateRegister");
 const validateLoginInput = require("../middleware/validateLogin");
 const { isAuth, isAdmin } = require('../middleware/authParameters');
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey("");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const moment = require("moment");
 moment().format();
 
