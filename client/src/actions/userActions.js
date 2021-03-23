@@ -2,7 +2,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import cookie from 'js-cookie';
 import setAuthToken from "./token";
-import { 
+import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -12,6 +12,15 @@ import {
   FETCH_REQUEST,
   FETCH_SUCCESS,
   FETCH_FAIL,
+  FORGOT_REQUEST,
+  FORGOT_SUCCESS,
+  FORGOT_FAIL,
+  RESET_REQUEST,
+  RESET_SUCCESS,
+  RESET_FAIL,
+  VERIFY_REQUEST,
+  VERIFY_SUCCESS,
+  VERIFY_FAIL,
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL
@@ -80,7 +89,6 @@ export const fetchUsers = () => async (dispatch, getState) => {
   }
 }
 
-
 //delete user
 export const deleteUser = (userId) => async (dispatch, getState) => {
   try {
@@ -95,3 +103,37 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
 	dispatch({ type: USER_DELETE_FAIL, payload: error.response.data });
   }
 };
+
+
+//verify account
+export const verifyCheck = (userData) => async (dispatch, getState) => {
+  try {
+	dispatch({ type: VERIFY_REQUEST });
+    const {data} = await axios.post(`/api/verify`, userData);
+    dispatch({ type: VERIFY_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({ type: VERIFY_FAIL, payload: error.response.data });
+  }
+}
+
+//reset password request
+export const forgotPassword = (email) => async (dispatch, getState) => {
+  try {
+	dispatch({ type: FORGOT_REQUEST });
+    const {data} = await axios.post(`/api/reset/request/${email}`);
+    dispatch({ type: FORGOT_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({ type: FORGOT_FAIL, payload: error.response.data });
+  }
+}
+
+//reset password change
+export const resetPassword = (userData) => async (dispatch, getState) => {
+  try {
+	dispatch({ type: RESET_REQUEST });
+    const {data} = await axios.post(`/api/reset/reset-password`, userData);
+    dispatch({ type: RESET_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({ type: RESET_FAIL, payload: error.response.data });
+  }
+}
