@@ -10,7 +10,7 @@ const validateRegisterInput = require("../middleware/validateRegister");
 const validateLoginInput = require("../middleware/validateLogin");
 const { isAuth, isAdmin } = require('../middleware/authParameters');
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey("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");
+sgMail.setApiKey("");
 const moment = require("moment");
 moment().format();
 
@@ -50,7 +50,7 @@ router.post("/register", async (req, res) => {
 	  
 	  const verificationMessage = {
 		to: `${newUser.email}`,
-		from: "blaisetelfer@gmail.com",
+		from: "",
 		subject: "SendGrid Message",
 		html: `<h2>Hello ${newUser.username}, welcome to our website! Activate your account with our link below. </h2>` +
 		`<a href="http://localhost:3000/verify/${newUser.email}/${newUser.verifyToken.token}"> Click Here To Log In! </a>`
