@@ -11,7 +11,16 @@ import {
   FETCH_FAIL,
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
-  USER_DELETE_FAIL
+  USER_DELETE_FAIL,
+  FORGOT_REQUEST,
+  FORGOT_SUCCESS,
+  FORGOT_FAIL,
+  RESET_REQUEST,
+  RESET_SUCCESS,
+  RESET_FAIL,
+  VERIFY_REQUEST,
+  VERIFY_SUCCESS,
+  VERIFY_FAIL
 } from "../actions/types";
 const isEmpty = require("is-empty");
 const Cookie = require('js-cookie');
@@ -24,6 +33,7 @@ const initialState = {
   authToken: token
 };
 
+//register handler
 export const authRegisterReducer = (state = initialState, action) => {
   switch (action.type) {
     case REGISTER_REQUEST:
@@ -40,6 +50,7 @@ export const authRegisterReducer = (state = initialState, action) => {
   }
 };
 
+//login handler
 export const authLoginReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
@@ -61,6 +72,7 @@ export const authLoginReducer = (state = initialState, action) => {
   }
 };
 
+//get list of all users
 export const fetchUsersReducer = (state = {users: []}, action) => {
   switch (action.type) {
     case FETCH_REQUEST:
@@ -81,6 +93,7 @@ export const fetchUsersReducer = (state = {users: []}, action) => {
   }
 };
 
+//delete user
 export const userDeleteReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case USER_DELETE_REQUEST:
@@ -89,6 +102,70 @@ export const userDeleteReducer = (state = { user: {} }, action) => {
       return { ...state, loading: false, user: action.payload, success: true };
     case USER_DELETE_FAIL:
       return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+
+//verify the account
+export const verifyAccountReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case VERIFY_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+    case VERIFY_SUCCESS:
+      return {
+        ...state,
+        message: action.payload,
+		loading: false
+      };
+	case VERIFY_FAIL:
+	  return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+//request new password
+export const passwordForgotReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FORGOT_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+    case FORGOT_SUCCESS:
+      return {
+        ...state,
+        message: action.payload,
+		loading: false
+      };
+	case FORGOT_FAIL:
+	  return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+//change password
+export const passwordResetReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case RESET_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+    case RESET_SUCCESS:
+      return {
+        ...state,
+        message: action.payload,
+		loading: false
+      };
+	case RESET_FAIL:
+	  return { loading: false, error: action.payload };
     default:
       return state;
   }
