@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/userActions";
 import {
@@ -16,13 +15,13 @@ import {
 class Login extends Component{
 	 
 	constructor() {
-		super();
-		this.state = {
-			user: {
-			  email: '',
-			  password: ''
-			}
-		};
+	  super();
+	  this.state = {
+		user: {
+		  email: '',
+		  password: ''
+		}
+	  };
 	}
 	
 	componentDidMount() {
@@ -50,14 +49,14 @@ class Login extends Component{
 		const { message } = this.props.authRegister;
 		
 		return(
-			<div className="inputForm">
+			<div className="main">
 				<Container text>
 					<Form onSubmit={this.onSubmit} className="submitForm">
 					  {loading ? (<Dimmer active inverted size="massive"><Loader inverted>Loading...</Loader></Dimmer>)
 					  : 
-					  error ? <Message className="error-text" content={error.message} />
-					  :
 					  message ? <Message className="success-text" content={message.message} />
+					  :
+					  error ? <Message className="error-text" content={error.message} />
 					  : null}
 					  <Segment>
 						
@@ -93,6 +92,8 @@ class Login extends Component{
 					  </Segment>
 					</Form>
 				</Container>
+				
+				<Link to="/forgotPassword">Forgot your password?</Link>
 			</div>
 		)
 	}
@@ -102,5 +103,6 @@ const mapStateToProps = (state) => ({
   authRegister: state.authRegister,
   authInfo: state.authInfo
 });
+
 
 export default connect(mapStateToProps, { loginUser })(Login);

@@ -20,10 +20,7 @@ class Register extends Component{
 	this.state = {
 	  user: {
 		username: "",
-		firstname: "",
-		lastname: "",
 		email: "",
-		location: "",
 		password: "",
 		confirmPassword: ""
 	  }
@@ -56,7 +53,7 @@ class Register extends Component{
 		const { loading, error } = this.props.authRegister;
 		
 		return(
-			<div className="inputForm">
+			<div>
 				<Container text>
 				
 					<Form onSubmit={this.onSubmit} className="submitForm">

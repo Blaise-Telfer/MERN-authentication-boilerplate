@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Button, Dimmer, Loader } from 'semantic-ui-react';
 import { logoutUser } from "../actions/userActions";
 
 
 class Dashboard extends Component{
-	 
-  constructor() {
-	super();
-  }
-	
+  
   onLogoutClick = (e) => {
 	e.preventDefault();
 	this.props.logoutUser();
@@ -28,7 +22,6 @@ class Dashboard extends Component{
 }
 
 const mapStateToProps = (state) => ({
-  authRegister: state.authRegister,
   authInfo: state.authInfo
 });
 
