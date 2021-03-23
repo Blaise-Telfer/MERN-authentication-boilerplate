@@ -53,6 +53,9 @@ class Navbar extends Component{
 			    <a className="nav-link" href="/adminPanel">Admin Panel</a>
 			  </li>
 			  <li className="nav-item">
+			    <a className="nav-link" href={`/profile/${authInfo.user.username}`} >Account</a>
+			  </li>
+			  <li className="nav-item">
 			    <a className="nav-link" onClick={this.onLogoutClick}>Logout</a>
 			  </li>
 			</ul>
@@ -67,6 +70,9 @@ class Navbar extends Component{
 			  </li>
 			  <li className="nav-item">
 			    <a className="nav-link" href="/dashboard">Dashboard</a>
+			  </li>
+			  <li className="nav-item">
+			    <a className="nav-link" href={`/profile/${authInfo.user.username}`} >Account</a>
 			  </li>
 			  <li className="nav-item">
 			    <a className="nav-link" onClick={this.onLogoutClick}>Logout</a>
