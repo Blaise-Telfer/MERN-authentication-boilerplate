@@ -14,6 +14,10 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import PasswordForgot from "./pages/PasswordForgot";
+import PasswordReset from "./pages/PasswordReset";
+import Verification from "./pages/Verification";
 import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
 
@@ -48,9 +52,14 @@ class App extends Component {
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
 			  <Route exact path="/register" component={Register} />
+			  <Route exact path="/forgotPassword" component={PasswordForgot} />
+			  <Route exact path="/resetPassword/:email/:token" component={PasswordReset} />
+			  <Route exact path="/verify/:email/:token" component={Verification} />
 			  
-			  <PrivateRoute exact path="/dashboard" component={Dashboard} />
 			  <AdminRoute exact path="/adminPanel" component={AdminPanel} />
+			  <PrivateRoute exact path="/dashboard" component={Dashboard} />
+			  <PrivateRoute exact path="/profile/:username" component={Profile} />
+			  
               <Route exact path="*" component={NotFound} />
 			</Switch>
 			</div>

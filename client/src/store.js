@@ -5,6 +5,9 @@ import {
   authRegisterReducer,
   authLoginReducer,
   fetchUsersReducer,
+  verifyAccountReducer,
+  passwordForgotReducer,
+  passwordResetReducer,
   userDeleteReducer
 } from "./reducers";
 
@@ -13,6 +16,9 @@ const reducer = combineReducers({
   authRegister: authRegisterReducer,
   authInfo: authLoginReducer,
   userList: fetchUsersReducer,
+  verifyAccount: verifyAccountReducer,
+  passwordForgot: passwordForgotReducer,
+  passwordReset: passwordResetReducer,
   userDelete: userDeleteReducer
 });
 
