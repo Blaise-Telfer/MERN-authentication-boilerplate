@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const keys = require("../config/config");
@@ -8,6 +9,8 @@ const User = require("../models/userModel");
 const validateRegisterInput = require("../middleware/validateRegister");
 const validateLoginInput = require("../middleware/validateLogin");
 const { isAuth, isAdmin } = require('../middleware/authParameters');
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey("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");
 const moment = require("moment");
 moment().format();
 
@@ -29,33 +32,45 @@ router.post("/register", async (req, res) => {
     return res.status(400).json({ message: "Username already exists" });
   }
 
-	const newUser = new User({
-		username: req.body.username,
-		email: req.body.email,
-		location: req.body.location,
-		password: req.body.password,
-		firstname: req.body.firstname,
-		lastname: req.body.lastname
-	});
+  const newUser = new User({
+	username: req.body.username,
+	email: req.body.email,
+	password: req.body.password
+  });
 	
-	// Hash password before saving in database
-    bcrypt.genSalt(10, (err, salt) => {
-		bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) { throw err };
-          newUser.password = hash;
-		  newUser.save()
-          .then(user => {
-			res.json({ message: "You have registered successfully and can now log in" });
-		  })
-		  .catch(error => res.json(error));
+  // Hash password before saving in database
+  bcrypt.genSalt(10, (err, salt) => {
+	bcrypt.hash(newUser.password, salt, (err, hash) => {
+	  if (err) { throw err };
+	  newUser.password = hash;
+	  const verificationToken = crypto.randomBytes(16).toString("hex");
+	  newUser.verifyToken.token = verificationToken;
+	  const tokenExpire = moment().add(24, "hours");
+	  newUser.verifyToken.expires = tokenExpire;
+	  
+	  const verificationMessage = {
+		to: `${newUser.email}`,
+		from: "blaisetelfer@gmail.com",
+		subject: "SendGrid Message",
+		html: `<h2>Hello ${newUser.username}, welcome to our website! Activate your account with our link below. </h2>` +
+		`<a href="http://localhost:3000/verify/${newUser.email}/${newUser.verifyToken.token}"> Click Here To Log In! </a>`
+	  };
+	  
+	  newUser.save().then(user => {
+		res.json({ message: "You have registered successfully and can now log in" });
+		sgMail.send(verificationMessage)
+		.catch((error) => {
+		  console.log(error);
 		});
+	  })
+	  .catch(error => res.json(error));
 	});
+  });
 });
 
 
 //login handler
-router.post('/login', (req, res) => {
-  //validation check
+router.post("/login", async (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
@@ -66,36 +81,39 @@ router.post('/login', (req, res) => {
   
   // Find user by email
   User.findOne({ email }).then(user => {
-    // Check if user exists
-    if (!user) {
+	// Check if user exists
+	if (!user) {
       return res.status(400).json({ message: "Email not found" });
-    }
+	}
 	
-    // Check password
-    bcrypt.compare(password, user.password).then(isMatch => {
+	// Check password
+	bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // Create JWT Payload
         const payload = {
           id: user.id,
 		  username: user.username,
 		  email: user.email,
-		  role: user.role
+		  role: user.role,
+		  verified: user.verified,
+		  verifyToken: user.verifyToken,
+		  resetToken: user.resetToken
         };
 		
         // Sign token, expires in 3hrs
         jwt.sign(payload, keys.JWT_SECRET, { expiresIn: 10800 }, (err, token) => {
-			res.json({success: true, token: "Bearer " + token});
+		  res.json({success: true, token: "Bearer " + token});
 		});
-		} else {
-			return res.status(400).json({ message: "Password incorrect" });
-		}
-    });
+	  } else {
+		return res.status(400).json({ message: "Password incorrect" });
+	  }
+	});
   });
 });
 
 
 //display all users in the admin panel
-router.get('/', isAuth, isAdmin, async (req,res) => {
+router.get("/", isAuth, isAdmin, async (req,res) => {
   const users = await User.find();
   if (users){
 	return res.status(200).json(users);
@@ -105,8 +123,9 @@ router.get('/', isAuth, isAdmin, async (req,res) => {
   }
 });
 
+
 //delete a user
-router.delete('/:id', isAuth, isAdmin, async (req, res) => {
+router.delete("/:id", isAuth, isAdmin, async (req, res) => {
   try{
 	const deletedUser = await User.findById(req.params.id);
 	if (deletedUser) {
@@ -118,5 +137,6 @@ router.delete('/:id', isAuth, isAdmin, async (req, res) => {
 	return res.status(400).json({ message: "Error in deleting user" });
   }
 });
+
 
 module.exports = router;
