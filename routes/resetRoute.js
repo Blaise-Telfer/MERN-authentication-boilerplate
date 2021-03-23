@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const User = require("../models/userModel");
 const {validateEmail, validatePassword} = require("../middleware/validateOther");
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey("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");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const moment = require("moment");
 moment().format();
 
@@ -36,7 +36,7 @@ router.post("/request/:email", async (req,res) => {
 	.then(user => {
 	  const resetMessage = {
 		to: `${user.email}`,
-		from: "blaisetelfer@gmail.com",
+		from: "",
 		subject: "Password Reset",
 		html: `<h2>Hello ${user.username}, you have indicated that you want to reset your password. </h2>` +
 		`<a href="http://localhost:3000/resetPassword/${user.email}/${newToken}"> Click here to reset your password; it expires after one hour. </a>`
