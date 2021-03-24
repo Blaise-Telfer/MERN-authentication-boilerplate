@@ -4,8 +4,9 @@ const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const User = require("../models/userModel");
 const {validateEmail, validatePassword} = require("../middleware/validateOther");
+const config = require("../config/config.js");
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(config.SENDGRID_API);
 const moment = require("moment");
 moment().format();
 
