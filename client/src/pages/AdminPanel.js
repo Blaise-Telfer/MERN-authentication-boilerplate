@@ -33,7 +33,7 @@ class AdminPanel extends Component{
 	this.handleClose();
   };
   
-  handleOpen = (id) => this.setState({ modalOpen: true, id });
+  handleOpen = (id) => this.setState({ modalOpen: true, id: id });
   handleClose = () => this.setState({ modalOpen: false });
   
   render(){
@@ -52,7 +52,7 @@ class AdminPanel extends Component{
 			  <li key={user._id}>
 				<div>{user.email}</div>
 				<div>{user.username}</div>
-				<Button color='red' onClick={() => this.handleOpen(user._id)}> Delete User 	</Button>
+				<Button color='red' onClick={() => this.handleOpen(user._id)}> Delete User </Button>
 				<Modal
 				  open={this.state.modalOpen}
 				  onClose={this.handleClose}
@@ -60,7 +60,7 @@ class AdminPanel extends Component{
 				>
 				  <Modal.Header>Are you sure you want to delete this account?</Modal.Header>
 				  <Modal.Content>
-					  <Button color='red' onClick={(e) => this.deleteHandler(e)}> Delete </Button>
+				  <Button color='red' onClick={this.deleteHandler}> Delete </Button>
 				  </Modal.Content>
 				  <Button color='green' onClick={this.handleClose} inverted> Cancel </Button>
 				</Modal>
