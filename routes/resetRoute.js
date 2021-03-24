@@ -39,7 +39,7 @@ router.post("/request/:email", async (req,res) => {
 		from: "",
 		subject: "Password Reset",
 		html: `<h2>Hello ${user.username}, you have indicated that you want to reset your password. </h2>` +
-		`<a href="http://localhost:3000/resetPassword/${user.email}/${newToken}"> Click here to reset your password; it expires after one hour. </a>`
+		`<a href="http://localhost:3000/resetPassword/${user.email}/${newToken}"> Click here to reset your password; this link expires after one hour. </a>`
 	  };
 	  sgMail.send(resetMessage)
 	  .catch((error) => {
