@@ -51,7 +51,7 @@ router.post("/register", async (req, res) => {
 	  const verificationMessage = {
 		to: `${newUser.email}`,
 		from: "",
-		subject: "SendGrid Message",
+		subject: "Verify Your Account",
 		html: `<h2>Hello ${newUser.username}, welcome to our website! Activate your account with our link below. </h2>` +
 		`<a href="http://localhost:3000/verify/${newUser.email}/${newUser.verifyToken.token}"> Click Here To Log In! </a>`
 	  };
