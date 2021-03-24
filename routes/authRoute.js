@@ -53,7 +53,7 @@ router.post("/register", async (req, res) => {
 		from: "",
 		subject: "Verify Your Account",
 		html: `<h2>Hello ${newUser.username}, welcome to our website! Activate your account with our link below. </h2>` +
-		`<a href="http://localhost:3000/verify/${newUser.email}/${newUser.verifyToken.token}"> Click Here To Log In! </a>`
+		`<a href="http://localhost:3000/verify/${newUser.email}/${newUser.verifyToken.token}"> Click here to verify your account </a>`
 	  };
 	  
 	  newUser.save().then(user => {
