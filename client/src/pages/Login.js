@@ -14,34 +14,31 @@ import {
 
 class Login extends Component{
 	 
-	constructor() {
-	  super();
-	  this.state = {
-		user: {
-		  email: '',
-		  password: ''
-		}
-	  };
+  state = {
+	user: {
+	  email: "",
+	  password: ""
 	}
-	
-	componentDidMount() {
-	  if (this.props.authInfo.isAuthenticated) {
-		this.props.history.push("/");
-	  }
+  };
+
+  componentDidMount() {
+	if (this.props.authInfo.isAuthenticated) {
+	  this.props.history.push("/");
 	}
-	
-	onChange = (e) => this.setState({
-      user: {...this.state.user, [e.target.name]: e.target.value }
-    });
-	
-	onSubmit = (e) => {
-		e.preventDefault();
-		// create a string for an HTTP body message
-		const email = encodeURIComponent(this.state.user.email);
-		const password = encodeURIComponent(this.state.user.password);
-		const formData = `email=${email}&password=${password}`;
-		this.props.loginUser(formData, this.props.history);
-	};
+  }
+
+  onChange = (e) => this.setState({
+	user: {...this.state.user, [e.target.name]: e.target.value }
+  });
+
+  onSubmit = (e) => {
+	e.preventDefault();
+	// create a string for an HTTP body message
+	const email = encodeURIComponent(this.state.user.email);
+	const password = encodeURIComponent(this.state.user.password);
+	const formData = `email=${email}&password=${password}`;
+	this.props.loginUser(formData, this.props.history);
+  };
 	
 	render(){
 		const { user } = this.state;

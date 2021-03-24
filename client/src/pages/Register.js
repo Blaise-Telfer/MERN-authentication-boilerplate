@@ -15,18 +15,15 @@ import {
 
 class Register extends Component{
 
-  constructor() {
-	super();
-	this.state = {
-	  user: {
-		username: "",
-		email: "",
-		password: "",
-		confirmPassword: ""
-	  }
+  state = {
+	user: {
+	  username: "",
+	  email: "",
+	  password: "",
+	  confirmPassword: ""
 	}
   }
-
+  
   componentDidMount() {
 	if (this.props.authInfo.isAuthenticated) {
 	  this.props.history.push("/");

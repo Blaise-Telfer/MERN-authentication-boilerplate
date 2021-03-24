@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button, Segment, Dimmer, Loader } from 'semantic-ui-react';
 
 
 class Profile extends Component{

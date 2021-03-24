@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
 
 class Home extends Component{
   
   render(){
-	  
 	return(
 	  <div className="main">
 		<h3>Home page</h3>
@@ -20,4 +18,4 @@ const mapStateToProps = (state) => ({
   authInfo: state.authInfo
 });
 
-export default connect(mapStateToProps)(Home);
+export default Home;

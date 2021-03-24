@@ -2,14 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { verifyCheck } from "../actions/userActions";
-import {
-  Button,
-  Container,
-  Form,
-  Icon,
-  Message,
-  Segment, Dimmer, Loader
-} from 'semantic-ui-react';
+import { Message, Dimmer, Loader } from 'semantic-ui-react';
 
 
 class Verification extends Component{

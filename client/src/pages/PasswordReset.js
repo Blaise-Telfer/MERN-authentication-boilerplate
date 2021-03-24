@@ -13,13 +13,10 @@ import {
 
 class ResetPassword extends Component{
   
-  constructor() {
-	super();
-	this.state = {
-	  password: "",
-	  confirmPassword: ""
-	};
-  }
+  state = {
+	password: "",
+	confirmPassword: ""
+  };
   
   onChange = (e) => this.setState({
 	...this.state, [e.target.name]: e.target.value 

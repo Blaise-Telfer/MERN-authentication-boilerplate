@@ -3,26 +3,16 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchUsers, deleteUser } from "../actions/userActions";
-import {
-  Button,
-  Container,
-  Form,
-  Icon,
-  Message,
-  Segment, Dimmer, Loader, Modal
-} from 'semantic-ui-react';
+import { Button, Message, Segment, Dimmer, Loader, Modal } from 'semantic-ui-react';
 
 
 class AdminPanel extends Component{
 
-  constructor() {
-	super();
-	this.state = {
-	  modalOpen: false,
-	  id: ""
-	}
+  state = {
+	modalOpen: false,
+	id: ""
   }
-
+  
   componentDidMount() {
 	this.props.fetchUsers();
   }
@@ -38,14 +28,15 @@ class AdminPanel extends Component{
   
   render(){
 	const { users, loading, error } = this.props.userList;
+	const { modalOpen } = this.state;
 	
 	return(
 	  <div className="main">
 		<h3>Welcome to the admin panel</h3>
 		{loading ? (<Dimmer active inverted size="massive"><Loader inverted>Loading...</Loader></Dimmer>) 
 		: 
-		error ? (<div> {error.message} </div>) 
-		: (
+		error ? <Message className="error-text" content={error.message} />
+		: null}
 		
 		  <div>
 			{users.map((user) => (
@@ -54,13 +45,13 @@ class AdminPanel extends Component{
 				<div>{user.username}</div>
 				<Button color='red' onClick={() => this.handleOpen(user._id)}> Delete User </Button>
 				<Modal
-				  open={this.state.modalOpen}
+				  open={modalOpen}
 				  onClose={this.handleClose}
 				  closeIcon
 				>
 				  <Modal.Header>Are you sure you want to delete this account?</Modal.Header>
 				  <Modal.Content>
-				  <Button color='red' onClick={this.deleteHandler}> Delete </Button>
+					  <Button color='red' onClick={this.deleteHandler}> Delete </Button>
 				  </Modal.Content>
 				  <Button color='green' onClick={this.handleClose} inverted> Cancel </Button>
 				</Modal>
@@ -68,7 +59,7 @@ class AdminPanel extends Component{
 			))}
 		  </div>
 		  
-		)}
+		
 	  </div>
 	)
   }
