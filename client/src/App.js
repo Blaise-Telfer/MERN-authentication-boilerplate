@@ -43,28 +43,27 @@ class App extends Component {
     return (
       <Provider store={Store}>
         <Router history={history}>
-		  <Navbar />
-		  <div className="grid-container">
-		  
-			<div className="main-content">
-			<Switch>
+	  <Navbar />
+	  <div className="grid-container">  
+	    <div className="main-content">
+	    <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
-			  <Route exact path="/register" component={Register} />
-			  <Route exact path="/forgotPassword" component={PasswordForgot} />
-			  <Route exact path="/resetPassword/:email/:token" component={PasswordReset} />
-			  <Route exact path="/verify/:email/:token" component={Verification} />
+	      <Route exact path="/register" component={Register} />
+	      <Route exact path="/forgotPassword" component={PasswordForgot} />
+	      <Route exact path="/resetPassword/:email/:token" component={PasswordReset} />
+	      <Route exact path="/verify/:email/:token" component={Verification} />
 			  
-			  <AdminRoute exact path="/adminPanel" component={AdminPanel} />
-			  <PrivateRoute exact path="/dashboard" component={Dashboard} />
-			  <PrivateRoute exact path="/profile/:username" component={Profile} />
+	      <AdminRoute exact path="/adminPanel" component={AdminPanel} />
+	      <PrivateRoute exact path="/dashboard" component={Dashboard} />
+	      <PrivateRoute exact path="/profile/:username" component={Profile} />
 			  
               <Route exact path="*" component={NotFound} />
-			</Switch>
-			</div>
-			<Footer />
+	    </Switch>
+	    </div>
+	    <Footer />
 			
-		  </div>
+	  </div>
         </Router>
       </Provider>
     );
