@@ -39,7 +39,7 @@ class ResetPassword extends Component{
 	return(
 	  <div className="main">
 		<Container text>
-		  <h2>You may reset your email</h2>
+		  <h2>You may reset your password</h2>
 		  
 		  <Form onSubmit={this.onSubmit} className="submitForm">
 			{loading ? (<Dimmer active inverted size="massive"><Loader inverted>Loading...</Loader></Dimmer>)
