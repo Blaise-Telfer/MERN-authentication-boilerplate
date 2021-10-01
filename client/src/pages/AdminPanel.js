@@ -17,14 +17,17 @@ class AdminPanel extends Component{
 	this.props.fetchUsers();
   }
   
-  deleteHandler = (e) => {
-	e.preventDefault();
+  handleOpen = (userID) => {
+	 this.setState({ modalOpen: true, id: userID });
+  }
+  handleClose = () => {
+	this.setState({ modalOpen: false });	
+  }
+  deleteHandler = () => {
 	this.props.deleteUser(this.state.id);
 	this.handleClose();
   };
   
-  handleOpen = (id) => this.setState({ modalOpen: true, id: id });
-  handleClose = () => this.setState({ modalOpen: false });
   
   render(){
 	const { users, loading, error } = this.props.userList;
