@@ -48,8 +48,8 @@ const AdminPanel = () => {
 	    
 		<h3>New Admin Panel</h3>
 		<div>
-			{users.map((user) => (
-			  <li key={user._id}>
+		  {users.map((user) => (
+			<li key={user._id}>
 				<div>{user._id}</div>
 				<div>{user.username}</div>
 				<Button color='red' onClick={() => handleOpen(user)}> Delete User </Button>
@@ -61,15 +61,13 @@ const AdminPanel = () => {
 				>
 				  <Modal.Header>Are you sure you want to delete {userName}'s account?</Modal.Header>
 				  <Modal.Content>
-					  <Button color='red' onClick={deleteHandler}> Delete </Button>
+				    <Button color='red' onClick={deleteHandler}> Delete </Button>
 				  </Modal.Content>
 				  <Button color='green' onClick={handleClose} inverted> Cancel </Button>
 				</Modal>
-				
-			  </li>
-			))}
+			</li>
+		  ))}
 		</div>
-		  
 	  </div>
 	  )}
 	</div>
