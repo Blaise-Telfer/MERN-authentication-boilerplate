@@ -98,7 +98,6 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
 	  {headers: {Authorization: authToken} }
 	);
     dispatch({ type: USER_DELETE_SUCCESS, payload: data, success: true });
-	window.location.reload()
   } catch (error) {
 	dispatch({ type: USER_DELETE_FAIL, payload: error.response.data });
   }
