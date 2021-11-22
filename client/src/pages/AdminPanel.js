@@ -1,78 +1,79 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { fetchUsers, deleteUser } from "../actions/userActions";
 import { Button, Message, Segment, Dimmer, Loader, Modal } from 'semantic-ui-react';
 
 
-class AdminPanel extends Component{
-
-  state = {
-	modalOpen: false,
-	id: ""
-  }
+const AdminPanel = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [userId, setId] = useState("");
+  const [userName, setName] = useState("");
+  const dispatch = useDispatch();
   
-  componentDidMount() {
-	this.props.fetchUsers();
-  }
+  const userList = useSelector((state) => state.userList);
+  const { users, loading, error } = userList;
   
-  handleOpen = (userID) => {
-	 this.setState({ modalOpen: true, id: userID });
+  const userDelete = useSelector((state) => state.userDelete);
+  const {
+    loading: loadingDelete,
+    success: successDelete,
+    error: errorDelete,
+  } = userDelete;
+  
+  const handleOpen = (user) => {
+	setModalOpen(true);
+	setId(user._id);
+	setName(user.username);
   }
-  handleClose = () => {
-	this.setState({ modalOpen: false });	
+  const handleClose = () => {
+	setModalOpen(false);
   }
-  deleteHandler = () => {
-	this.props.deleteUser(this.state.id);
-	this.handleClose();
+  const deleteHandler = () => {
+    dispatch(deleteUser(userId));
+	handleClose();
   };
   
-  
-  render(){
-	const { users, loading, error } = this.props.userList;
-	const { modalOpen } = this.state;
+  useEffect(() => {
+	dispatch(fetchUsers());
+  }, [successDelete]);
 	
-	return(
-	  <div className="main">
-		<h3>Welcome to the admin panel</h3>
-		{loading ? (<Dimmer active inverted size="massive"><Loader inverted>Loading...</Loader></Dimmer>) 
-		: 
-		error ? <Message className="error-text" content={error.message} />
-		: null}
-		
-		  <div>
+  return (
+	<div className="main">
+	  {loading ? (<Dimmer active inverted size="massive"><Loader inverted>Loading...</Loader></Dimmer>) 
+	  : 
+	  error ? (<div> {error.message} </div>) 
+	  : (
+	  <div className="users-layout">
+	    
+		<h3>New Admin Panel</h3>
+		<div>
 			{users.map((user) => (
 			  <li key={user._id}>
-				<div>{user.email}</div>
+				<div>{user._id}</div>
 				<div>{user.username}</div>
-				<Button color='red' onClick={() => this.handleOpen(user._id)}> Delete User </Button>
+				<Button color='red' onClick={() => handleOpen(user)}> Delete User </Button>
+				
 				<Modal
 				  open={modalOpen}
-				  onClose={this.handleClose}
+				  onClose={handleClose}
 				  closeIcon
 				>
-				  <Modal.Header>Are you sure you want to delete this account?</Modal.Header>
+				  <Modal.Header>Are you sure you want to delete {userName}'s account?</Modal.Header>
 				  <Modal.Content>
-					  <Button color='red' onClick={this.deleteHandler}> Delete </Button>
+					  <Button color='red' onClick={deleteHandler}> Delete </Button>
 				  </Modal.Content>
-				  <Button color='green' onClick={this.handleClose} inverted> Cancel </Button>
+				  <Button color='green' onClick={handleClose} inverted> Cancel </Button>
 				</Modal>
+				
 			  </li>
 			))}
-		  </div>
+		</div>
 		  
-		
 	  </div>
-	)
-  }
-}
+	  )}
+	</div>
+  );
+};
 
-const mapStateToProps = (state) => ({
-  userList: state.userList,
-  userDelete: state.userDelete,
-  authInfo: state.authInfo
-});
-
-
-export default connect(mapStateToProps, {fetchUsers, deleteUser})(AdminPanel);
+export default AdminPanel;
